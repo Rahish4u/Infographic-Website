@@ -4,6 +4,7 @@ const puppeteer = require('puppeteer');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config(); 
 
 const app = express();
 app.use(cors());
@@ -13,8 +14,9 @@ app.get('/screenshot', async (req, res) => {
     try {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        
-        await page.goto(`http://localhost:3000`, { waitUntil: 'networkidle2' });
+
+        const frontendUrl = process.env.FRONTEND_URL || 'https://infographic-website-brown.vercel.app/';
+        await page.goto(frontendUrl, { waitUntil: 'networkidle2' });
         const screenshotPath = path.join(__dirname, 'Frontend', 'screenshot.png');
 
         await page.screenshot({ path: screenshotPath, fullPage: true });
@@ -30,7 +32,7 @@ app.get('/screenshot', async (req, res) => {
     }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000; // Use the PORT from .env or default to 3000
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
