@@ -69,7 +69,7 @@
         const screenshotBtn = document.getElementById('screenshot-btn');
         screenshotBtn.addEventListener('click', async () => {
             try {
-                const response = await fetch('http://localhost:3000/screenshot');
+                const response = await fetch('https://infographic-website.onrender.com/screenshot');
                 const blob = await response.blob();
                 const link = document.createElement('a');
                 link.href = URL.createObjectURL(blob);
