@@ -7,7 +7,13 @@ const path = require('path');
 require('dotenv').config(); 
 
 const app = express();
-app.use(cors());
+// Configure CORS with the origin of your Vercel app
+const corsOptions = {
+    origin: 'https://infographic-website-brown.vercel.app',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Specify allowed HTTP methods
+    credentials: true, // If you need to handle cookies or authorization headers
+};
+app.use(cors(corsOptions));
 app.use(express.static('Frontend')); // Serve static files from the Frontend directory
 
 app.get('/screenshot', async (req, res) => {
