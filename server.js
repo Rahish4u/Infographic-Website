@@ -1,6 +1,6 @@
 
 const express = require('express');
-const puppeteer = require('puppeteer');
+const { chromium } = require('playwright');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
@@ -18,7 +18,10 @@ app.use(express.static('Frontend')); // Serve static files from the Frontend dir
 
 app.get('/screenshot', async (req, res) => {
     try {
-        const browser = await puppeteer.launch();
+        const browser = await chromium.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
         const page = await browser.newPage();
 
         const frontendUrl = process.env.FRONTEND_URL || 'https://infographic-website-brown.vercel.app/';
