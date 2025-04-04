@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "postinstall": "apt-get update && apt-get install -y libnss3 libxss1 libasound2 && npx playwright install chromium"
+    "postinstall": "npx playwright install chromium"
   },
   "keywords": [],
   "author": "",
