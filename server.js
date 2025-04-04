@@ -16,14 +16,21 @@ app.get('/screenshot', async (req, res) => {
     try {
         const browser = await chromium.launch({ headless: true });
         const page = await browser.newPage();
+        await page.setViewportSize({ width: 1920, height: 1080 }); // Full HD resolution
         await page.goto('https://infographic-website-brown.vercel.app/', { waitUntil: 'networkidle' });
-        
+
         const screenshotPath = path.join(__dirname, 'screenshot.png');
-        await page.screenshot({ path: screenshotPath, fullPage: true });
+        await page.screenshot({ 
+            path: screenshotPath, 
+            fullPage: true, 
+            type: 'png'  // Ensure it's PNG
+        });
+
         await browser.close();
         
+        res.setHeader('Content-Type', 'image/png');
         res.download(screenshotPath, 'screenshot.png', () => {
-            fs.unlinkSync(screenshotPath);
+            fs.unlinkSync(screenshotPath); // Delete after download
         });
     } catch (error) {
         console.error('Screenshot Error:', error);
