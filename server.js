@@ -14,11 +14,7 @@ app.use(express.static('Frontend'));
 
 app.get('/screenshot', async (req, res) => {
     try {
-        const browser = await puppeteer.launch({
-            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/opt/render/.cache/puppeteer/chrome/linux-134.0.6998.165/chrome-linux64/chrome',
-            headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'] // Render pe error fix ke liye
-        });
+        const browser = await puppeteer.launch({ headless: true });
 
         const page = await browser.newPage();
         await page.setViewportSize({ width: 1920, height: 1080 }); // ✅ Correct method
