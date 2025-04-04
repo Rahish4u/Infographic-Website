@@ -14,10 +14,12 @@ app.use(express.static('Frontend'));
 
 app.get('/screenshot', async (req, res) => {
     try {
-        const browser = await puppeteer.launch({ 
-            headless: "new",
-            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        const browser = await puppeteer.launch({
+            headless: 'new',
+            executablePath: process.env.CHROME_PATH || puppeteer.executablePath(), 
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
+
         const page = await browser.newPage();
         await page.setViewport({ width: 1920, height: 1080 });
         await page.goto('https://infographic-website-brown.vercel.app/', { waitUntil: 'networkidle2' });
