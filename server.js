@@ -15,13 +15,13 @@ app.use(express.static('Frontend'));
 app.get('/screenshot', async (req, res) => {
     try {
         const browser = await puppeteer.launch({
-            headless: 'new',
-            executablePath: process.env.CHROME_PATH || puppeteer.executablePath(), 
-            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || '/opt/render/.cache/puppeteer/chrome/linux-134.0.6998.165/chrome-linux64/chrome',
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'] // Render pe error fix ke liye
         });
 
         const page = await browser.newPage();
-        await page.setViewport({ width: 1920, height: 1080 });
+        await page.setViewportSize({ width: 1920, height: 1080 }); // ✅ Correct method
         await page.goto('https://infographic-website-brown.vercel.app/', { waitUntil: 'networkidle2' });
 
         const screenshotPath = path.join(__dirname, 'screenshot.png');
