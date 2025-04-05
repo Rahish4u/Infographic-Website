@@ -15,10 +15,10 @@ app.use(express.static('Frontend'));
 app.get('/screenshot', async (req, res) => {
     try {
         const browser = await puppeteer.launch({ headless: true });
-
         const page = await browser.newPage();
-        await page.setViewportSize({ width: 1920, height: 1080 }); // ✅ Correct method
-        await page.goto('https://infographic-website-brown.vercel.app/', { waitUntil: 'networkidle2' });
+        await page.setViewport({ width: 1920, height: 1080 }); // ✅ Correct method
+        await page.goto('https://infographic-website-brown.vercel.app/', { waitUntil: 'networkidle0' });
+        await page.waitForTimeout(2000);
 
         const screenshotPath = path.join(__dirname, 'screenshot.png');
         await page.screenshot({ path: screenshotPath, fullPage: true });
