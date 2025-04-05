@@ -14,10 +14,14 @@ app.use(express.static('Frontend'));
 
 app.get('/screenshot', async (req, res) => {
     try {
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({ headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        });
         const page = await browser.newPage();
+
         await page.setViewport({ width: 1920, height: 1080 }); // ✅ Correct method
         await page.goto('https://infographic-website-brown.vercel.app/', { waitUntil: 'networkidle0' });
+        await page.waitForSelector('body');
         await page.waitForTimeout(2000);
 
         const screenshotPath = path.join(__dirname, 'screenshot.png');
@@ -37,4 +41,5 @@ app.get('/screenshot', async (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
+    
 });

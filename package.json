@@ -5,8 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-     "postinstall": "npx puppeteer install"
-    
+    "postinstall": "npx puppeteer install"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +17,6 @@
     "dotenv": "^16.4.7",
     "express": "^5.1.0",
     "playwright": "^1.51.1",
-    "puppeteer": "^24.5.0"
+    "puppeteer": "^24.6.0"
   }
 }
